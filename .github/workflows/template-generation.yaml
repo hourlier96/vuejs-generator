@@ -1,0 +1,44 @@
+name: Test frontend template
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-run-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install global dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate frontend template
+        run: |
+          cd ../
+          cookiecutter vuejs-generator/app --no-input
+
+      - name: Run server
+        run: |
+          cd ../vuejs_template/
+          npm install --save-dev
+          npm run lint
+          npm run type-check
+          npm run dev &
+
+      # Can't access backend generate API from github actions
+      # so we use a public API for unit tests
+      - name: Run tests
+        run: |
+          cd ../vuejs_template/
+          npm run test:unit
+        env:
+          VITE_BASE_URL: "https://catfact.ninja/fact"

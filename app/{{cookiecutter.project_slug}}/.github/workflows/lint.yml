@@ -1,0 +1,28 @@
+#{% raw %}
+name: Lint & Type Check & Unit Tests
+
+on:
+  pull_request:
+    branches: [develop, uat, main]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    strategy:
+      matrix:
+        node-version: ["20.11.0"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install --save-dev
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm run test:unit
+#{% endraw %}

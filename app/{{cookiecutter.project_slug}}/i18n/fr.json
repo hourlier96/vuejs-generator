@@ -1,0 +1,68 @@
+{
+    "common": {
+        "search": "Rechercher...",
+        "autocompleteField": {
+            "label": "Recherchez une valeur",
+            "labelMultiple": "Recherchez une ou plusieurs valeurs"
+        },
+        "currencyField": {
+            "label": "Montant"
+        },
+        "emailField": {
+            "placeholder": "Entrez votre email",
+            "label": "Email"
+        },
+        "fileField": {
+            "label": "Sélectionnez un fichier",
+            "labelMultiple": "Sélectionnez un ou plusieurs fichiers"
+        },
+        "modalContainer": {
+            "title": "Titre de la modal"
+        },
+        "passwordField": {
+            "placeholder": "Entrez votre mot de passe",
+            "label": "Mot de passe"
+        },
+        "selectField": {
+            "label": "Sélectionnez une valeur",
+            "labelMultiple": "Sélectionnez une ou plusieurs valeurs"
+        },
+        "textField": {
+            "placeholder": "Entrez votre texte",
+            "label": ""
+        },
+        "datePickerField": {
+            "label": "Sélectionnez une date",
+            "labelMultiple": "Sélectionnez une ou plusieurs dates"
+        }
+    },
+    "form": {
+        "required": "Ce champ est obligatoire",
+        "minimalLength": "Taille minimale: {length}",
+        "maximalLength": "Taille maximale: {length}",
+        "minimalValue": "Valeur minimale: {value}",
+        "maximalValue": "Valeur maximale: {value}",
+        "emailNotValid": "Ce champ doit être un email valide",
+        "passwordRequirements": "Ce champ doit contenir au moins 8 caractères, une majuscule, une minuscule, et un chiffre"
+    },
+    "formView": {
+        "formTitle": "Exemple de formulaire & appel API",
+        "validationOn": "Validation du formulaire activée",
+        "validationOff": "Validation du formulaire désactivée",
+        "usernameField": {
+            "label": "Nom d'utilisateur",
+            "placeholder": "Entrez votre nom d'utilisateur"
+        },
+        "modalBody": "Une API va être contactée. Assurez vous qu'elle soit démarrée, puis confirmez."
+    },
+    "tableView": {
+        "tableTitle": "Exemple de liste de Todo",
+        "titleHeader": "Titre",
+        "descriptionHeader": "Description",
+        "priorityHeader": "Priorité",
+        "deleteModal": {
+            "body": "Voulez-vous vraiment supprimer cette tâche?",
+            "title": "Supprimer une tâche"
+        }
+    }
+}

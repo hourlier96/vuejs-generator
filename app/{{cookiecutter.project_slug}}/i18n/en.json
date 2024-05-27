@@ -1,0 +1,68 @@
+{
+    "common": {
+        "search": "Search...",
+        "autocompleteField": {
+            "label": "Find a value",
+            "labelMultiple": "Find one or more values"
+        },
+        "currencyField": {
+            "label": "Amount"
+        },
+        "emailField": {
+            "placeholder": "Enter your email",
+            "label": "Email"
+        },
+        "fileField": {
+            "label": "Select a file",
+            "labelMultiple": "Select one or more files"
+        },
+        "modalContainer": {
+            "title": "Modal title"
+        },
+        "passwordField": {
+            "placeholder": "Enter your password",
+            "label": "Password"
+        },
+        "selectField": {
+            "label": "Select a value",
+            "labelMultiple": "Select one or more values"
+        },
+        "textField": {
+            "placeholder": "Enter text",
+            "label": ""
+        },
+        "datePickerField": {
+            "label": "Select a date",
+            "labelMultiple": "Select one ou more dates"
+        }
+    },
+    "form": {
+        "required": "Field is required",
+        "minimalLength": "Minimal length: {length}",
+        "maximalLength": "Maximal length: {length}",
+        "minimalValue": "Minimal value: {value}",
+        "maximalValue": "Maximal value: {value}",
+        "emailNotValid": "Email is not valid",
+        "passwordRequirements": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number"
+    },
+    "formView": {
+        "formTitle": "Form & API call exemple",
+        "validationOn": "Form validation enabled",
+        "validationOff": "Form validation disabled",
+        "usernameField": {
+            "label": "Username",
+            "placeholder": "Enter your username"
+        },
+        "modalBody": "An API will be contacted, ensure it is running, then confirm."
+    },
+    "tableView": {
+        "tableTitle": "Todo list exemple",
+        "titleHeader": "Title",
+        "descriptionHeader": "Description",
+        "priorityHeader": "Priority",
+        "deleteModal": {
+            "body": "Confirm todo deletion?",
+            "title": "Delete a todo"
+        }
+    }
+}
