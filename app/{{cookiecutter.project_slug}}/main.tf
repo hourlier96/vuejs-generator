@@ -23,7 +23,7 @@ resource "google_artifact_registry_repository" "cookiecutter-repository" {
 resource "null_resource" "build_push_image" {
   provisioner "local-exec" {
     command = <<-EOT
-      gcloud auth configure-docker
+      gcloud auth configure-docker europe-docker.pkg.dev
       docker build --platform linux/amd64 -t "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/cookiecutter-template/{{ cookiecutter.project_slug.replace('_', '-') }}" -f Dockerfile.prod .
       docker push "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/cookiecutter-template/{{ cookiecutter.project_slug.replace('_', '-') }}"
     EOT
