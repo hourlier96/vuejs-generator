@@ -24,18 +24,12 @@ It assumes that the template is pushed on a separate Github repository
   python3 -m pip install -r requirements.txt
   ```
 
-- Copy .env in "app/{{cookiecutter.project_slug}}" folder
+- (Optional): Add a github access token to .env file if you want the branch protection to be automated at generation
 
-  Do not modify 'cookiecutter.key' values (replaced at generation)
-
-  ```bash
-    VITE_BASE_URL="http://localhost:8000/api"
-    # (Optional): Used to set branch protection
-    GITHUB_ACCESS_TOKEN="<PERSONAL_ACCESS_TOKEN>"
-
-    # For deployed version
-    VITE_BASE_URL="https://<BACK_SERVICE_NAME>-<PROJECT_NUMBER>.{{ cookiecutter.gcloud_region }}.run.app/api"
-  ```
+```bash
+# .env content ...
+GITHUB_ACCESS_TOKEN="<PERSONAL_ACCESS_TOKEN>"
+```
 
 ## Generate Project
 
