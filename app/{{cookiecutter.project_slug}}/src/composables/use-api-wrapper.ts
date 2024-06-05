@@ -27,14 +27,13 @@ export async function wrapper(
     }
     return res
   } catch (error) {
-    if (options.show) {
-      snack.display({
-        text: error.message,
-        type: 'error',
-        icon: getIcon(null),
-        location: options.location
-      })
-    }
+    snack.display({
+      text: `${error.message}`,
+      type: 'error',
+      icon: getIcon(null),
+      location: options.location
+    })
+    console.error(error)
     return error
   } finally {
     loading.value = false

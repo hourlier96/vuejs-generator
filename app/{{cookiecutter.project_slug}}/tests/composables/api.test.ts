@@ -16,8 +16,8 @@ test(
     const apis = useApis()
     const loading = ref(false)
     const response = await wrapper(apis.todos.unitTest(), loading)
-    expect('status' in response).toBeTruthy()
-    expect(response.status === 200).toBeTruthy()
+    expect('status' in response).toBeTruthy() // Ensure API is enabled
+    expect(response.status === 200).toBeTruthy() 
   },
   { timeout: 5000 }
 )

@@ -19,6 +19,9 @@
         "modalContainer": {
             "title": "Titre de la modal"
         },
+        "confirmationModal": {
+            "title": "Confirmer ?"
+        },
         "passwordField": {
             "placeholder": "Entrez votre mot de passe",
             "label": "Mot de passe"

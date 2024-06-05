@@ -5,9 +5,9 @@
     </h2>
     <ServerTable
       :headers="headers"
-      :items="apiResult.items"
+      :items="apiResult?.items"
       :loading="loading"
-      :total-items="apiResult.total"
+      :total-items="apiResult?.total"
       :group-by="groupBy"
       @update-data="getTodos($event)"
     >
