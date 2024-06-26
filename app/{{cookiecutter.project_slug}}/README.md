@@ -64,6 +64,52 @@ npm run test:unit
 npm run type-check
 ```
 
+## Application structure
+
+```bash
+{{cookiecutter.project_slug}}
+│
+├── .cloudbuild                              - Cloud Build configuration
+│   └── cloudbuild.yaml
+│
+├── .eslintrc.cjs                            - eslint rules configuration
+│
+├── .github                                  - Github Actions
+│   └── workflows
+│
+├── Dockerfile
+│
+├── Dockerfile.prod                          - Used to build and deploy on Cloud Run
+│
+├── i18n                                     - Multi langage support configuration
+│
+├── index.html                               - Entrypoint
+│
+├── main.tf                                  - Terraform configuration for deployment
+│
+├── nginx.conf                               - Nginx conf used by Dockerfile.prod
+│
+├── src                                      - Web stuffs
+│   ├── App.vue                                - Vue root component
+│   ├── api                                    - Api Settings & axios wrapper
+│   ├── assets                                 - Global css & images 
+│   └── components
+│       └── common                             - Reusable components (Form, Container, Table...)
+│       └── BottomNav.vue
+│       └── Navbar.vue
+│       └── NavigationDrawer.vue               - Left Sidebar
+│   ├── composables                            - Reusable JS wrappers
+│   ├── helpers                                - Global utils
+│   ├── main.ts                                - App global conf (i18n, store, router, themes...)
+│   ├── middleware                             - Interceptor
+│   ├── router                                 - Routes definitions
+│   ├── stores                                 - Pinia store management
+│   ├── types                                  - Custom/Missing types
+│   └── views                                  - Pages
+│
+├── tests                                    - Unit Tests
+```
+
 ## Deployment
 
 :warning: Everything under this section assumes you specified a repository to push to, and choosed 'yes' to "as_container" question. Otherwise update the main.tf according yo your needs before running  :warning:
@@ -103,10 +149,6 @@ This will run linting for every Pull Request on develop, uat and main branches
 - From the trigger created by Terraform, give Github repository access to Cloud Build
 
 - Copy .env into the secret '{{ cookiecutter.project_slug.replace('_', '-') }}'' to ensure Cloud Build will have the correct environement.
-
-- Roles:
-  - Cloud Build Service Account has Cloud Run Admin role
-  - Cloud Build Service Account has Secret Manager Secret Accessor role
 
 ## Maintainers
 
