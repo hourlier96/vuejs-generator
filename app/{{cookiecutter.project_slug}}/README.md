@@ -12,6 +12,7 @@
 
 - [Vue3 with Composition API](https://vuejs.org/guide/introduction.html)
 - [Vuetify](https://vuetifyjs.com/en/getting-started/installation/)
+- [Axios client](https://axios-http.com/docs/intro)
 - [Pinia](https://pinia.vuejs.org/)
 - [piniaPluginPersistedstate](https://github.com/prazdevs/pinia-plugin-persistedstate/)
 

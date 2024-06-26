@@ -1,41 +1,51 @@
 # VueJS Template Generation
 
-This repository provides a [VueJS](https://vuejs.org) base stack:
+This repository provides a duplicable [VueJS](https://vuejs.org) code base:
 
 - Customizable layout (Navbar, Sidebar, Footer) & generic components with [Vuetify](https://vuetify.com)
 - API axios client wrapped into reusable service
 - Form validation & unit tests
 - Dark theme & i18n support
 
-This templates is:
+  [See ReadMe](app/{{cookiecutter.project_slug}}/README.md)
+
+- - -
+
+The template is
 
 - Based on [cookiecutter](https://www.cookiecutter.io/)
 - Auto-pushable on Github when generated
-- Auto-deployable on [Cloud Run](https://cloud.google.com/run).
+- Auto-deployable on [Cloud Run](https://cloud.google.com/run)
 
-It assumes that the template is pushed on a separate Github repository
+## Usage
 
-## Installation
+**(Recommended)** Use [Stack generator module](https://pypi.org/project/stack-gen/) to generate a new code base from this template.
 
-- Install dependencies
+- - -
+OR
+- - -
+
+Clone this repository and install dependencies
 
   ```bash
   cd vuejs-generator
   python3 -m pip install -r requirements.txt
   ```
 
-- (Optional): Add a github access token to .env file if you want the branch protection to be automated at generation
+(Optional): Add a github access token to .env file if you want the branch protection to be automated at generation
 
 ```bash
 # .env content ...
 GITHUB_ACCESS_TOKEN="<PERSONAL_ACCESS_TOKEN>"
 ```
 
-## Generate Project
+Generate the code base
 
 ```bash
 cookiecutter vuejs-generator/app   # Will ask your needs from cookiecutter.json
 ```
+
+## Options
 
 - **'repository_name'** allows you to specify an empty-existing Git repository to push the template on.
 
