@@ -16,25 +16,6 @@
 - [Pinia](https://pinia.vuejs.org/)
 - [piniaPluginPersistedstate](https://github.com/prazdevs/pinia-plugin-persistedstate/)
 
-## Formatting / Linting
-
-The template is using [ESLint for VueJS](https://eslint.vuejs.org/).
-
-By default, **auto formatting is enabled on save**.
-
-You can run prettier formatting, but ensure eslint for VueJS is re-apply after.
-
-## I18N
-
-To add any new langage:
-
-- Add new languages in JSON format to `i18n` directory
-- Complete 'languages' & 'countries_info' variables in `i18n/index.js`
-
-(see [vue-i18n](https://kazupon.github.io/vue-i18n/) for more documentation)
-
-(see [vue-country-flag-next](https://www.npmjs.com/package/vue-country-flag-next) for country flags)
-
 ## Project Setup
 
 ### Run locally
@@ -83,6 +64,10 @@ npm run type-check
 │
 ├── i18n                                     - Multi langage support configuration
 │
+├── iac                                      - Terraform resources
+│
+├── deploy.sh                                - Deployment script
+│
 ├── index.html                               - Entrypoint
 │
 ├── main.tf                                  - Terraform configuration for deployment
@@ -110,45 +95,76 @@ npm run type-check
 ├── tests                                    - Unit Tests
 ```
 
+## Formatting / Linting
+
+The template is using [ESLint for VueJS](https://eslint.vuejs.org/).
+
+By default, **auto formatting is enabled on save**.
+
+You can run prettier formatting, but ensure eslint for VueJS is re-apply after.
+
+## I18N
+
+To add any new langage:
+
+- Add new languages in JSON format to `i18n` directory
+- Complete 'languages' & 'countries_info' variables in `i18n/index.js`
+
+(see [vue-i18n](https://kazupon.github.io/vue-i18n/) for more documentation)
+
+(see [vue-country-flag-next](https://www.npmjs.com/package/vue-country-flag-next) for country flags)
+
 ## Deployment
 
-:warning: Everything under this section assumes you specified a repository to push to, and choosed 'yes' to "as_container" question. Otherwise update the main.tf according yo your needs before running  :warning:
+:warning: Everything under this section assumes you specified **a repository to push to**, a **gcloud project name**, and answered **'yes' to "as_container" question**.
 
 ### Initialisation
 
-To deploy the infrastructure, make sure ADC is configured correctly.
+First, **make sure ADC is configured correctly.**
 
-The main.tf will deploy:
+Then, to start a first deployment:
 
-- Image into the Artifact Registry used by Cloud Run
-- Cloud Run service
-- Secret in Secret Manager
+- [Connect your repository to Cloud Build](https://console.cloud.google.com/cloud-build/repositories/1st-gen;region={{cookiecutter.gcloud_region}}?authuser=0&project={{cookiecutter.gcloud_project}}&supportedpurview=project)
+
+- Init required resources and start deployment:
 
 ```bash
-# Ensure your .env content is the deployed version before running
-cd {{ cookiecutter.project_slug }}
-terraform init
-terraform apply
+gcloud components update && gcloud components install beta
+./deploy.sh -e <dev|staging|prod> # Will get the correct .env.x file & inject variables
 
+# Creates required resources & IAM permissions
+# - Secret in Secret Manager filled with .env.dev
+# - Cloud Storage bucket to store terraform state
+# - Artifact registry repository to store Cloud Run images
+# - Required IAM permissions for Cloud Build default SA
+#     - run.admin
+#     - artifactregistry.admin
+#     - secretmanager.secretAccessor
+#     - storage.admin
+#     - serviceusage.serviceUsageAdmin
+# 
+# - Cloud Build trigger to run deployment on push
+
+# Then it starts the Cloud Build trigger
 ```
 
 ## CI/CD
 
 ### CI with Github Actions
 
-Use .github/workflows/lint.yaml **by enabling Github Actions API** in your repository
+[**Enable Github Actions API**](https://github.com/{{cookiecutter.repository_name}}/actions) in your repository
 
-This will run linting for every Pull Request on develop, uat and main branches
+Actions are configured to run linting for every Pull Request on develop, uat and main branches
 
-### CD with Cloud Build & Cloud Run
+### CD with Cloud Build & Terraform
 
-.cloudbuild/cloudbuild.yaml is used automatically to deploy to Cloud Run according to your Cloud Build trigger configuration
+On push, .cloudbuild/cloudbuild.yaml will:
 
-*Requirements*:
+- Build and push new image
+- re-apply the iac/main.tf infrastructure to ensure consistency
+- Deploy the new Cloud Run revision
 
-- From the trigger created by Terraform, give Github repository access to Cloud Build
-
-- Copy .env into the secret '{{ cookiecutter.project_slug.replace('_', '-') }}'' to ensure Cloud Build will have the correct environement.
+Use iac/main.tf to deploy new GCP resources if possible to make terraform aware of it
 
 ## Maintainers
 

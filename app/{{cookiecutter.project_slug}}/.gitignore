@@ -33,5 +33,4 @@ coverage
 hooks_modules
 
 # Terraform
-terraform*
-.terraform*
+iac/.terraform*

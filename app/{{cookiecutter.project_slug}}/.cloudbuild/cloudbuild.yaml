@@ -6,10 +6,17 @@ steps:
       - -c
       - gcloud secrets versions access latest --secret=$_SERVICE --project=$PROJECT_ID > .env
 
+  - id: get-img-cache
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: ['-c', 'docker pull europe-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE:latest || exit 0']
+
   - id: build
     name: gcr.io/cloud-builders/docker
     args:
       - build
+      - --cache-from
+      - europe-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE
       - -t
       - europe-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE
       - -f
@@ -21,6 +28,20 @@ steps:
     args:
       - push
       - europe-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE
+
+  - id: tf-init
+    name: hashicorp/terraform:latest
+    entrypoint: sh
+    args:
+      - -c
+      - cd iac && terraform init -backend-config="env/${_ENV}/backend.conf"
+
+  - id: tf-apply
+    name: hashicorp/terraform:latest
+    entrypoint: sh
+    args:
+      - -c
+      - cd iac && terraform apply --auto-approve
 
   - id: deploy
     name: gcr.io/cloud-builders/gcloud
@@ -34,13 +55,13 @@ steps:
         --allow-unauthenticated \
         --set-env-vars=PROJECT_ID=$PROJECT_ID \
         --region $_REGION \
-        --timeout 1200
+        --timeout 3600
 
 images:
   - europe-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE
 
 substitutions:
-  _REPO: cookiecutter-template
+  _REPO: "{{ cookiecutter.project_slug.replace('_', '-') }}-repository"
   _SERVICE: "{{ cookiecutter.project_slug.replace('_', '-') }}"
   _REGION: "{{ cookiecutter.gcloud_region }}"
 

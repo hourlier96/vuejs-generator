@@ -15,7 +15,7 @@ provider "google" {
 
 resource "google_artifact_registry_repository" "cookiecutter-repository" {
   location      = "europe"
-  repository_id = "cookiecutter-template"
+  repository_id = ""{{ cookiecutter.project_slug.replace('_', '-') }}-repository""
   description   = "Repository for template generation"
   format        = "DOCKER"
 }
@@ -24,8 +24,8 @@ resource "null_resource" "build_push_image" {
   provisioner "local-exec" {
     command = <<-EOT
       gcloud auth configure-docker europe-docker.pkg.dev
-      docker build --platform linux/amd64 -t "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/cookiecutter-template/{{ cookiecutter.project_slug.replace('_', '-') }}" -f Dockerfile.prod .
-      docker push "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/cookiecutter-template/{{ cookiecutter.project_slug.replace('_', '-') }}"
+      docker build --platform linux/amd64 -t "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/"{{ cookiecutter.project_slug.replace('_', '-') }}-repository"/{{ cookiecutter.project_slug.replace('_', '-') }}" -f Dockerfile.prod .
+      docker push "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/"{{ cookiecutter.project_slug.replace('_', '-') }}-repository"/{{ cookiecutter.project_slug.replace('_', '-') }}"
     EOT
   }
 }
@@ -37,7 +37,7 @@ resource "google_cloud_run_service" "frontend_service" {
   template {
     spec {
       containers {
-        image = "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/cookiecutter-template/{{ cookiecutter.project_slug.replace('_', '-') }}"
+        image = "europe-docker.pkg.dev/{{ cookiecutter.gcloud_project }}/"{{ cookiecutter.project_slug.replace('_', '-') }}-repository"/{{ cookiecutter.project_slug.replace('_', '-') }}"
       }
     }
   }
