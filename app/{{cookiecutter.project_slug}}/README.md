@@ -122,7 +122,7 @@ To add any new langage:
 
 First, **make sure ADC is configured correctly.**
 
-Then, to start a first deployment:
+#### Start a first deployment
 
 - [Connect your repository to Cloud Build](https://console.cloud.google.com/cloud-build/repositories/1st-gen;region={{cookiecutter.gcloud_region}}?authuser=0&project={{cookiecutter.gcloud_project}}&supportedpurview=project)
 
@@ -146,6 +146,17 @@ gcloud components update && gcloud components install beta
 # - Cloud Build trigger to run deployment on push
 
 # Then it starts the Cloud Build trigger
+```
+
+Cloud Build is now ready to auto deploy new Cloud Run revision after each push
+
+#### ...or re-deploy the app
+
+```bash
+./deploy.sh -e <dev|staging|prod> # Will get the correct .env.x file & inject variables
+
+# - Replaces secret version content if it differs from .env.x
+# - Runs the existing Cloud Build trigger
 ```
 
 ## CI/CD

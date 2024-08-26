@@ -22,9 +22,8 @@ resource "google_cloud_run_service" "backend_service" {
     }
     metadata {
       annotations = {
-        "autoscaling.knative.dev/maxScale"      = "1000"
-        "run.googleapis.com/cloudsql-instances" = var.database_choosed.sql ? google_sql_database_instance.instance[0].connection_name : ""
-        "run.googleapis.com/client-name"        = "terraform"
+        "autoscaling.knative.dev/maxScale" = "1000"
+        "run.googleapis.com/client-name"   = "terraform"
       }
     }
   }
