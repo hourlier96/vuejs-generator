@@ -27,7 +27,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-.env
+.env*
 
 # Custom files
 hooks_modules
